@@ -188,15 +188,16 @@ def removeContent(src, modImg, modFactor=10.0, showProgress=False):
 st.title('Image Seam Carver')
 importResizeFactor = 0.33
 image_file = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
-input_image = Image.open(image_file)
-input_image = np.array(input_image)
-image1 = cv2.resize(input_image, (0,0), fx=importResizeFactor, fy=importResizeFactor)
-image1 = cv2.cvtColor(image1, cv2.COLOR_RGB2BGR)
-height, width, _ = image1.shape
+if image_file is not None:
+    input_image = Image.open(image_file)
+    input_image = np.array(input_image)
+    image1 = cv2.resize(input_image, (0,0), fx=importResizeFactor, fy=importResizeFactor)
+    image1 = cv2.cvtColor(image1, cv2.COLOR_RGB2BGR)
+    height, width, _ = image1.shape
 
-input_resize_X = st.slider('Resize X', 0.1, 2.0, 1.0)
-input_resize_Y = st.slider('Resize Y', 0.1, 2.0, 1.0)
+    input_resize_X = st.slider('Resize X', 0.1, 2.0, 1.0)
+    input_resize_Y = st.slider('Resize Y', 0.1, 2.0, 1.0)
 
-out = retarget(image1, target=(input_resize_Y * height, input_resize_X * width))
-st.write("Output Image:")
-st.image(cv2.cvtColor(out, cv2.COLOR_BGR2RGB), use_column_width="auto")
+    out = retarget(image1, target=(input_resize_Y * height, input_resize_X * width))
+    st.write("Output Image:")
+    st.image(cv2.cvtColor(out, cv2.COLOR_BGR2RGB), use_column_width="auto")
